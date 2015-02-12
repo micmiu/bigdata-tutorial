@@ -1,4 +1,4 @@
-package com.micmiu.hadoop;
+package com.micmiu.hive;
 
 public class TestMain {
 

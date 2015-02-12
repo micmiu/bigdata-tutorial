@@ -1,4 +1,4 @@
-package com.micmiu.hadoop;
+package com.micmiu.hive;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

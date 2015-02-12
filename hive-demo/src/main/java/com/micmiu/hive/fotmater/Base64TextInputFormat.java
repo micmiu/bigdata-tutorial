@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.micmiu.hive;
+package com.micmiu.hive.fotmater;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
