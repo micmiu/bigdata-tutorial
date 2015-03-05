@@ -2,6 +2,7 @@ package com.micmiu.hadoop.mr.demo;
 
 import java.io.IOException;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -38,18 +39,19 @@ import org.apache.hadoop.util.GenericOptionsParser;
  */
 public class XflowStatic {
 
-	public static abstract class XflowMapper extends
-			Mapper<Object, Text, Text, IntWritable> {
+	//SrcAddr DstAddr SrcPort DstPort Protocol
+	private static final String TYPE_KEY = "xflow.type";
+
+	public static class XflowMapper extends Mapper<Object, Text, Text, IntWritable> {
 
 		private final static IntWritable one = new IntWritable(1);
 		private Text ret = new Text();
 
-		protected abstract String getPrefix();
-
 		public void map(Object key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String strLine = value.toString().trim();
-			if (strLine.trim().startsWith(getPrefix())) {
+			String prefix = context.getConfiguration().get(TYPE_KEY);
+			if (strLine.trim().startsWith(prefix + ":")) {
 				String[] arr = strLine.split(" ");
 				if (arr.length > 1) {
 					ret.set(arr[1]);
@@ -59,52 +61,12 @@ public class XflowStatic {
 		}
 	}
 
-	public static class SrcAddr extends XflowMapper {
-		@Override
-		protected String getPrefix() {
-			return "SrcAddr:";
-		}
-
-	}
-
-	public static class DstAddr extends XflowMapper {
-		@Override
-		protected String getPrefix() {
-			return "DstAddr:";
-		}
-
-	}
-
-	public static class SrcPort extends XflowMapper {
-		@Override
-		protected String getPrefix() {
-			return "SrcPort:";
-		}
-
-	}
-
-	public static class DstPort extends XflowMapper {
-		@Override
-		protected String getPrefix() {
-			return "DstPort:";
-		}
-
-	}
-
-	public static class Protocol extends XflowMapper {
-		@Override
-		protected String getPrefix() {
-			return "Protocol:";
-		}
-
-	}
-
 	public static class IntSumReducer extends
 			Reducer<Text, IntWritable, Text, IntWritable> {
 		private IntWritable result = new IntWritable();
 
-		public void reduce(Text key, Iterable<IntWritable> values,
-				Context context) throws IOException, InterruptedException {
+		public void reduce(Text key, Iterable<IntWritable> values, Context context)
+				throws IOException, InterruptedException {
 			int sum = 0;
 			for (IntWritable val : values) {
 				sum += val.get();
@@ -115,29 +77,18 @@ public class XflowStatic {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String[] otherArgs = new GenericOptionsParser(args).getRemainingArgs();
+
+		Configuration conf = new Configuration();
+		String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
 		if (otherArgs.length != 3) {
 			System.err.println("Usage: xflowstatic <type> <in> <out>");
 			System.exit(2);
 		}
+		conf.set(TYPE_KEY, otherArgs[0]);
 		Job job = Job.getInstance();
-		job.setJobName("xflow static");
+		job.setJobName("xflowstatic");
 		job.setJarByClass(XflowStatic.class);
-		if ("SrcAddr".equals(otherArgs[0])) {
-			job.setMapperClass(SrcAddr.class);
-		} else if ("DstAddr".equals(otherArgs[0])) {
-			job.setMapperClass(DstAddr.class);
-		} else if ("SrcPort".equals(otherArgs[0])) {
-			job.setMapperClass(SrcPort.class);
-		} else if ("DstPort".equals(otherArgs[0])) {
-			job.setMapperClass(DstPort.class);
-		} else if ("Protocol".equals(otherArgs[0])) {
-			job.setMapperClass(Protocol.class);
-		} else {
-			System.err.println("xflowstatic unknow type...");
-			System.exit(-1);
-		}
-
+		job.setMapperClass(XflowMapper.class);
 		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);
