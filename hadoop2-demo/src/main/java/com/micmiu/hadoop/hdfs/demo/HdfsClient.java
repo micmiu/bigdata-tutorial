@@ -24,6 +24,8 @@ public class HdfsClient {
 	public HdfsClient() {
 		System.setProperty("HADOOP_USER_NAME", "hdfs");
 		conf = new Configuration();
+		conf.addResource("edh/core-site.xml");
+		conf.addResource("edh/hdfs-site.xml");
 		try {
 			fs = FileSystem.get(conf);
 		} catch (Exception ex) {
