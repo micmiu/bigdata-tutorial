@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+<property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://edataha</value>
+    <description>这里的 edataha为HA集群的逻辑名，
+    与hdfs-site.xml中的dfs.nameservices配置一致</description>
+</property>
+<property>
+    <name>hadoop.tmp.dir</name>
+    <value>/home/bigdata/data/tmp</value>
+    <description>这里的路径默认是NameNode、DataNode、JournalNode等存放数据的公共目录。
+    用户也可单独指定每类数据的存储目录。这里目录结构需要自己先创建好</description>
+</property>
+<property>
+  <name>ha.zookeeper.quorum</name>
+  <value>zk1.hadoop:2181,zk2.hadoop:2181,zk3.hadoop:2181</value>
+  <description>这里是zk集群配置中各节点的地址和端口。
+  注意：数量一定是奇数而且和zoo.cfg中配置的一致</description>
+</property>
+</configuration>

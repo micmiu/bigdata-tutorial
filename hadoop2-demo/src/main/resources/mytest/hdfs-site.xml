@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+<property>
+    <name>dfs.replication</name>
+    <value>3</value>
+    <description>配置副本数量</description>
+</property>
+<property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:/home/bigdata/data/dfs/name</value>
+    <description>namenode元数据存储目录</description>
+</property>
+<property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:/home/bigdata/data/dfs/data</value>
+    <description>datanode元数据存储目录</description>
+</property>
+
+<property>
+	<name>dfs.nameservices</name>
+ 	<value>edataha</value>
+	<description>指定HA命名服务，可随意起名，
+	 core-site.xml中fs.defaultFS配置需要引用它</description>
+</property>
+<property>
+	<name>dfs.ha.namenodes.edataha</name>
+	<value>nn1,nn2</value>
+	<description>指定集群下NameNode逻辑名</description>
+</property>
+
+<property>
+  	<name>dfs.namenode.rpc-address.edataha.nn1</name>
+  	<value>nn1.hadoop:9000</value>
+</property>
+<property>
+  	<name>dfs.namenode.rpc-address.edataha.nn2</name>
+  	<value>nn2.hadoop:9000</value>
+</property>
+
+<property>
+  	<name>dfs.namenode.http-address.edataha.nn1</name>
+  	<value>nn1.hadoop:50070</value>
+</property>
+<property>
+  	<name>dfs.namenode.http-address.edataha.nn2</name>
+  	<value>nn2.hadoop:50070</value>
+</property>
+
+<property>  
+  	<name>dfs.namenode.servicerpc-address.edataha.nn1</name>  
+  	<value>nn1.hadoop:53310</value>  
+</property>  
+<property>  
+	<name>dfs.namenode.servicerpc-address.edataha.nn2</name>  
+  	<value>nn2.hadoop:53310</value>  
+</property>
+<property>  
+	<name>dfs.ha.automatic-failover.enabled.edataha</name>  
+	<value>true</value>
+	<description>故障失败是否自动切换</description>
+</property>   
+<property>
+	<name>dfs.namenode.shared.edits.dir</name>
+	<value>qjournal://nn1.hadoop:8485;nn2.hadoop:8485;dn3.hadoop:8485/hadoop-journal</value>
+	<description>配置JournalNode，包含三部分：
+	1.qjournal 前缀表名协议；
+	2.然后就是三台部署JournalNode的主机host/ip:端口，三台机器之间用分号分隔；
+	3.最后的hadoop-journal是journalnode的命名空间，可以随意取名。
+ 	</description>
+</property>
+<property>
+	<name>dfs.journalnode.edits.dir</name>
+	<value>/home/bigdata/data/dfs/journal/</value>
+	<description>journalnode的本地数据存放目录</description>
+</property>
+
+<property>  
+  <name>dfs.client.failover.proxy.provider.edataha</name>                        
+  <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  <description> 出故障时执行故障切换的类</description>
+</property>  
+      
+<property>      
+  <name>dfs.ha.fencing.methods</name>      
+  <value>sshfence</value> 
+  <description>ssh的操作方式执行故障切换</description>
+</property>  
+    
+<property>      
+  <name>dfs.ha.fencing.ssh.private-key-files</name>      
+  <value>/home/hadoop/.ssh/id_dsa</value>
+  <description> 如果使用ssh进行故障切换，使用ssh通信时用的密钥存储的位置</description>  
+</property>  
+  
+<property>  
+  <name>dfs.ha.fencing.ssh.connect-timeout</name>  
+  <value>1000</value>  
+</property>  
+  
+<property>  
+  <name>dfs.namenode.handler.count</name>  
+  <value>10</value>  
+</property>
+</configuration>
