@@ -28,3 +28,4 @@ bin/
 # idea settings
 .idea
 *.iml
+demo/
