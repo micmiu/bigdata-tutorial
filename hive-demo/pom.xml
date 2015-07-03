@@ -1,10 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.micmiu.hadoop</groupId>
+    <parent>
+        <groupId>com.micmiu.bigdata</groupId>
+        <artifactId>bigdata-tutorial</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.micmiu.bigdata</groupId>
     <artifactId>hive-demo</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${project.parent.version}</version> 
     <name>${project.artifactId}</name>
     <url>http://www.micmiu.com</url>
     <developers>
@@ -29,9 +34,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdk.version>1.6</jdk.version>
-
-        <hadoop.version>2.2.0</hadoop.version>
     </properties>
     <dependencies>
         <dependency>
@@ -59,21 +61,19 @@
         <dependency>
             <groupId>org.apache.hive</groupId>
             <artifactId>hive-exec</artifactId>
-            <version>0.12.0</version>
+            <version>${hive.version}</version>
         </dependency>
 
         <!-- JSON Parser -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
-            <version>1.9.8</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>
