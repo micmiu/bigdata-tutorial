@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.micmiu.bigdata</groupId>
+        <artifactId>bigdata-tutorial</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.micmiu.bigdata</groupId>
+    <artifactId>es-tutorial</artifactId>
+    <packaging>jar</packaging>
+    <version>${project.parent.version}</version>
+    <name>${project.artifactId}</name>
+    <url>http://www.micmiu.com</url>
+    <developers>
+        <developer>
+            <id>Michael</id>
+            <name>Michael Sun</name>
+            <email>sjsky007@gmail.com</email>
+            <url>http://www.micmiu.com</url>
+            <timezone>+8</timezone>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+    <contributors>
+    </contributors>
+    <organization>
+        <name>micmiu.com</name>
+        <url>http://www.micmiu.com</url>
+    </organization>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+</project>

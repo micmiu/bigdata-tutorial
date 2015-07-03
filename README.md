@@ -18,3 +18,6 @@
  Hive extends demo:
  + MyDemoInputFormat	: 自定义分隔符
 
+
+## es-tutorial ##
+ elasticsearch query demo.
