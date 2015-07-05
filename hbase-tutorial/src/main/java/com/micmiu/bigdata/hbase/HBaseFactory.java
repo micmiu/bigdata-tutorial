@@ -35,44 +35,35 @@ public class HBaseFactory {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HBaseFactory.class);
 
-	public static String QUORUM = "192.168.0.30,192.168.0.31,192.168.0.32";
-	public static int CLIENT_PORT = 2181;
-
 	private Configuration config;
 	private HConnection conn = null;
 
 	public HBaseFactory() {
-		this.config =HBaseConfiguration.create();
+		this.config = HBaseConfiguration.create();
+		this.openConn();
 	}
 
 	public HBaseFactory(Configuration config) {
 		this.config = config;
+		this.openConn();
 	}
-
-
 
 	public HBaseFactory(String quorum, int port) {
 		Configuration conf = HBaseConfiguration.create();
 		conf.set("hbase.zookeeper.property.clientPort", port + "");
 		conf.set("hbase.zookeeper.quorum", quorum);
-		//默认为 /hbase
+		//默认为 : /hbase  EDH: /hyperbase1
 		conf.set("zookeeper.znode.parent", "/hyperbase1");
 		//config.set("hbase.master", "192.168.0.30:60000");
 		//config.set("hbase.master.port", "60000");
-		try {
-			this.config = conf;
-			conn = HConnectionManager.createConnection(conf);
-			System.out.println(">>>> conn = " + conn);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		this.openConn();
 
 	}
 
-	public HConnection getConn() {
+	public HConnection openConn() {
 		if (null == conn) {
 			try {
-				return HConnectionManager.createConnection(config);
+				this.conn = HConnectionManager.createConnection(config);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -205,7 +196,10 @@ public class HBaseFactory {
 
 	public static void main(String[] args) throws Exception {
 
-		HBaseFactory factory = new HBaseFactory();
+		String quorum = "192.168.0.30,192.168.0.31,192.168.0.32";
+		int port = 2181;
+		HBaseFactory factory = new HBaseFactory(quorum, port);
+
 		String tableName = "demo_test";
 		String columnFamily = "cf";
 		System.out.println("=============================== : delete");
@@ -233,7 +227,6 @@ public class HBaseFactory {
 				System.out.println(", value= " + new String(CellUtil.cloneValue(cell)));
 			}
 		}
-
 
 		factory.closeConn();
 	}
