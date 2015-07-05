@@ -21,3 +21,10 @@
 
 ## es-tutorial ##
  elasticsearch query demo.
+ 
+## hbase-tutorial ##
+ Hbase API demos.
+ 
+## ...... ##
+
+
