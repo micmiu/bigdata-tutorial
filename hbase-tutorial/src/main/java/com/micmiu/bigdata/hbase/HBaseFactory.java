@@ -53,7 +53,7 @@ public class HBaseFactory {
 		conf.set("hbase.zookeeper.property.clientPort", port + "");
 		conf.set("hbase.zookeeper.quorum", quorum);
 		//默认为 : /hbase  EDH: /hyperbase1
-		conf.set("zookeeper.znode.parent", "/hbase");
+		conf.set("zookeeper.znode.parent", "/hyperbase1");
 		//config.set("hbase.master", "192.168.0.30:60000");
 		//config.set("hbase.master.port", "60000");
 		this.config = conf;
@@ -198,14 +198,13 @@ public class HBaseFactory {
 	public static void main(String[] args) throws Exception {
 
 		String quorum = "192.168.0.30,192.168.0.31,192.168.0.32";
-		quorum = "192.168.8.191,192.168.1.192,192.168.1.193";
+		//quorum = "192.168.8.191,192.168.1.192,192.168.1.193";
 		int port = 2181;
 		HBaseFactory factory = new HBaseFactory(quorum, port);
 
 		String tableName = "demo_test";
 		String columnFamily = "cf";
-		System.out.println("=============================== : delete");
-		factory.deleteTable(tableName);
+
 		System.out.println("=============================== : create");
 		factory.createTable(tableName, columnFamily);
 		System.out.println("=============================== : print");
@@ -229,6 +228,9 @@ public class HBaseFactory {
 				System.out.println(", value= " + new String(CellUtil.cloneValue(cell)));
 			}
 		}
+
+		System.out.println("=============================== : delete");
+		factory.deleteTable(tableName);
 
 		factory.closeConn();
 	}
