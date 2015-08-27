@@ -17,25 +17,25 @@ import org.slf4j.LoggerFactory;
  * Date: 7/7/2015
  * Time: 23:35
  */
-public class HbaseHandler {
+public class HBaseSimpleDemo {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(HbaseHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(HBaseSimpleDemo.class);
 
-	private String encoding = HBaseUtils.DEF_ENCODING;
+	private String encoding = "UTF-8";
 
 	private Configuration config;
 
 	private HConnection hconn;
 
-	public HbaseHandler() {
+	public HBaseSimpleDemo() {
 		this.config = HBaseConfiguration.create();
 	}
 
-	public HbaseHandler(Configuration config) {
+	public HBaseSimpleDemo(Configuration config) {
 		this.config = config;
 	}
 
-	public HbaseHandler(String quorum, int port) {
+	public HBaseSimpleDemo(String quorum, int port) {
 		Configuration conf = HBaseConfiguration.create();
 		conf.set("hbase.zookeeper.property.clientPort", port + "");
 		conf.set("hbase.zookeeper.quorum", quorum);

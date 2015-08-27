@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
  * Date: 7/7/2015
  * Time: 23:27
  */
-public class HbaseUtils {
+public class HBaseCommonUtil {
 
 	public final static String DEF_ENCODING = "UTF-8";
 

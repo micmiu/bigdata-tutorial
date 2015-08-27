@@ -1,6 +1,5 @@
 package com.micmiu.bigdata.hbase;
 
-import com.micmiu.bigdata.hbase.client.HBaseClientManager;
 import com.micmiu.bigdata.hbase.client.HBaseConnPool;
 
 /**
@@ -9,9 +8,9 @@ import com.micmiu.bigdata.hbase.client.HBaseConnPool;
  * Date: 7/8/2015
  * Time: 08:00
  */
-public class HbaseDMLHandler extends HBaseBaseHandler {
+public class HBaseDMLHandler extends HBaseBaseHandler {
 
-	public HbaseDMLHandler(HBaseConnPool connPool) {
+	public HBaseDMLHandler(HBaseConnPool connPool) {
 		super(connPool);
 	}
 }
