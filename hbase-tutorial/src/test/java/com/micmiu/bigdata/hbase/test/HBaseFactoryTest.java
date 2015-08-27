@@ -1,4 +1,4 @@
-package com.micmiu.bigdata.hbase;
+package com.micmiu.bigdata.hbase.test;
 
 import org.apache.hadoop.conf.Configuration;
 
@@ -30,30 +30,30 @@ import java.io.IOException;
  * Date: 6/2/2015
  * Time: 15:58
  */
-public class HBaseFactory {
+public class HBaseFactoryTest {
 
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(HBaseFactory.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(HBaseFactoryTest.class);
 
 	private Configuration config;
 	private HConnection conn = null;
 
-	public HBaseFactory() {
+	public HBaseFactoryTest() {
 		this.config = HBaseConfiguration.create();
 		this.openConn();
 	}
 
-	public HBaseFactory(Configuration config) {
+	public HBaseFactoryTest(Configuration config) {
 		this.config = config;
 		this.openConn();
 	}
 
-	public HBaseFactory(String quorum, int port) {
+	public HBaseFactoryTest(String quorum, int port) {
 		Configuration conf = HBaseConfiguration.create();
 		conf.set("hbase.zookeeper.property.clientPort", port + "");
 		conf.set("hbase.zookeeper.quorum", quorum);
 		//默认为 : /hbase  EDH: /hyperbase1
-		conf.set("zookeeper.znode.parent", "/hyperbase1");
+//		conf.set("zookeeper.znode.parent", "/hyperbase1");
 		//config.set("hbase.master", "192.168.0.30:60000");
 		//config.set("hbase.master.port", "60000");
 		this.config = conf;
@@ -198,9 +198,9 @@ public class HBaseFactory {
 	public static void main(String[] args) throws Exception {
 
 		String quorum = "192.168.0.30,192.168.0.31,192.168.0.32";
-		//quorum = "192.168.8.191,192.168.1.192,192.168.1.193";
+		quorum = "192.168.8.191,192.168.1.192,192.168.1.193";
 		int port = 2181;
-		HBaseFactory factory = new HBaseFactory(quorum, port);
+		HBaseFactoryTest factory = new HBaseFactoryTest(quorum, port);
 
 		String tableName = "demo_test";
 		String columnFamily = "cf";
@@ -219,7 +219,7 @@ public class HBaseFactory {
 		table.close();
 
 		System.out.println("=============================== : query");
-		ResultScanner rs = HBaseFactory.scanAll(table);
+		ResultScanner rs = HBaseFactoryTest.scanAll(table);
 		for (Result result : rs) {
 			System.out.println(">>>> result Empty : " + result.isEmpty());
 			for (Cell cell : result.rawCells()) {

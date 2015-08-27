@@ -21,7 +21,7 @@ public class HbaseHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HbaseHandler.class);
 
-	private String encoding = HbaseUtils.DEF_ENCODING;
+	private String encoding = HBaseUtils.DEF_ENCODING;
 
 	private Configuration config;
 
