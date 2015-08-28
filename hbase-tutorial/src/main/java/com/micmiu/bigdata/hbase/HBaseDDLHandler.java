@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * HTable DDL handler
@@ -27,8 +29,15 @@ public class HBaseDDLHandler extends HBaseBaseHandler {
 		super(connPool);
 	}
 
+	/**
+	 * create table by familyNames
+	 *
+	 * @param tableName
+	 * @param familyNames
+	 * @return
+	 * @throws Exception
+	 */
 	public Boolean createTable(String tableName, String... familyNames) throws Exception {
-
 		if (tableExist(tableName)) {
 			LOGGER.warn(">>>> Table {} exists!", tableName);
 			return false;
@@ -42,6 +51,13 @@ public class HBaseDDLHandler extends HBaseBaseHandler {
 
 	}
 
+	/**
+	 * create table by HTableDescriptor
+	 *
+	 * @param tableDesc
+	 * @return
+	 * @throws Exception
+	 */
 	public Boolean createTable(HTableDescriptor tableDesc) throws Exception {
 		HBaseAdmin admin = new HBaseAdmin(getConnPool().getConn());
 		admin.createTable(tableDesc);
@@ -50,18 +66,20 @@ public class HBaseDDLHandler extends HBaseBaseHandler {
 		return true;
 	}
 
-	public void printTableDesc(String tableName) {
-		try {
-			HTableInterface table = getTable(tableName);
-			HTableDescriptor desc = table.getTableDescriptor();
-			LOGGER.info(">>>> Print Table {} Desc", tableName);
-			for (HColumnDescriptor colDesc : desc.getColumnFamilies()) {
-				LOGGER.info(">>>> family column: {}", colDesc.getNameAsString());
+	/**
+	 * list all table name
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public List<String> listTables() throws Exception {
 
-			}
-		} catch (Exception ex) {
-			LOGGER.error(">>>> Print table desc error:", ex);
+		HBaseAdmin admin = new HBaseAdmin(getConnPool().getConn());
+		List<String> tableNameList = new ArrayList<String>();
+		for (TableName tableName : admin.listTableNames()) {
+			tableNameList.add(tableName.getNameAsString());
 		}
+		return tableNameList;
 	}
 
 	/**
@@ -73,7 +91,7 @@ public class HBaseDDLHandler extends HBaseBaseHandler {
 		HBaseAdmin admin = new HBaseAdmin(getConnPool().getConn());
 		if (admin.tableExists(tableName)) {
 			try {
-				if(admin.isTableEnabled(tableName)){
+				if (admin.isTableEnabled(tableName)) {
 					admin.disableTable(tableName);
 				}
 				admin.deleteTable(tableName);

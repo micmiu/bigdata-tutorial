@@ -1,6 +1,7 @@
 package com.micmiu.bigdata.hbase.test;
 
 import com.micmiu.bigdata.hbase.HBaseDDLHandler;
+import com.micmiu.bigdata.hbase.HBaseUtils;
 import com.micmiu.bigdata.hbase.client.HBaseClientManager;
 import com.micmiu.bigdata.hbase.client.HBaseConnPool;
 import org.apache.hadoop.hbase.HColumnDescriptor;
@@ -35,8 +36,7 @@ public class HBaseDDLHandlerTest {
 		ddlHandler.createTable(tableName, columnFamily, "cf2");
 
 		System.out.println("=============================== : desc");
-		ddlHandler.printTableDesc(tableName);
-
+		HBaseUtils.printTableInfo(ddlHandler.getTable(tableName));
 		System.out.println("=============================== : alter");
 		HBaseAdmin admin = new HBaseAdmin(connPool.getConn());
 		admin.disableTable(tableName);
@@ -47,13 +47,13 @@ public class HBaseDDLHandlerTest {
 		newhcd.setMaxVersions(2);
 		newhcd.setKeepDeletedCells(KeepDeletedCells.TRUE);
 		tableDesc.addFamily(newhcd);
-		
+
 		admin.modifyTable(tableName, tableDesc);
 		admin.enableTable(tableName);
 		admin.close();
 
 		System.out.println("=============================== : desc");
-		ddlHandler.printTableDesc(tableName);
+		HBaseUtils.printTableInfo(ddlHandler.getTable(tableName));
 		System.out.println("=============================== : delete");
 		ddlHandler.deleteTable(tableName);
 
