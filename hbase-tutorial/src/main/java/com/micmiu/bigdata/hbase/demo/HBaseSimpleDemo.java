@@ -1,4 +1,4 @@
-package com.micmiu.bigdata.hbase;
+package com.micmiu.bigdata.hbase.demo;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
