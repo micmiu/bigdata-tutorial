@@ -16,14 +16,18 @@
 
 ## hive-demo ##
  Hive extends demo:
- + MyDemoInputFormat	: 自定义分隔符
-
+ + MyDemoInputFormat	: 自定义字符串作为分隔符
+ + HiveConnDbcpManager  : DBCP实现Hive连接池
+ + JSONCDHSerDe         : SerDe for JSON
 
 ## es-tutorial ##
  elasticsearch query demo.
  
 ## hbase-tutorial ##
- Hbase API demos.
+ Hbase API demos:
+ + HBaseConnPoolManager  : 连接池
+ + HBaseDDLHandler       : HBase Java demo for DDL
+ + HBaseDMLHandler       : HBase Java demo for DML
  
 ## ...... ##
 
