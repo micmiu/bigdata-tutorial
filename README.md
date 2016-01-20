@@ -28,6 +28,7 @@
  + HBaseConnPoolManager  : 连接池
  + HBaseDDLHandler       : HBase Java demo for DDL
  + HBaseDMLHandler       : HBase Java demo for DML
+ + RegionObserverDemo    : HBase coprocessor demo
  
 ## ...... ##
 
