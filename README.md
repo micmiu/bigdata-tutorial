@@ -29,6 +29,7 @@
  + HBaseDDLHandler       : HBase Java demo for DDL
  + HBaseDMLHandler       : HBase Java demo for DML
  + RegionObserverDemo    : HBase coprocessor demo
+ + EnvViewer             : HBase coprocessor for get environment
  
 ## ...... ##
 
