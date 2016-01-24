@@ -25,7 +25,6 @@ public class EnvViewer extends BaseRegionObserver {
 
 	public static final byte[] ROW_GETCONF = Bytes.toBytes("@@@GETCONF@@@");
 	public static final byte[] ROW_GETREGION = Bytes.toBytes("@@@GETREGION@@@");
-	public static final byte[] ROW_GETTABLE = Bytes.toBytes("@@@GETTABLE@@@");
 
 	@Override
 	public void preGetOp(ObserverContext<RegionCoprocessorEnvironment> e, Get get, List<Cell> results) throws IOException {
@@ -40,11 +39,6 @@ public class EnvViewer extends BaseRegionObserver {
 		} else if (Bytes.equals(get.getRow(), ROW_GETREGION)) {
 			KeyValue kv = new KeyValue(get.getRow(), FAMILY, get.getRow(),
 					Bytes.toBytes(e.getEnvironment().getRegion().getRegionNameAsString()));
-			LOG.debug("coprocess match the row kv: " + kv);
-			results.add(kv);
-		} else if (Bytes.equals(get.getRow(), ROW_GETTABLE)) {
-			KeyValue kv = new KeyValue(get.getRow(), FAMILY, get.getRow(),
-					Bytes.toBytes(e.getEnvironment().getRegion().getTableDesc().getNameAsString()));
 			LOG.debug("coprocess match the row kv: " + kv);
 			results.add(kv);
 		}
