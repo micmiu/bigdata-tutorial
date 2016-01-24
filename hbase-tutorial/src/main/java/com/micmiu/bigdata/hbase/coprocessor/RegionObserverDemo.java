@@ -3,6 +3,7 @@ package com.micmiu.bigdata.hbase.coprocessor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CoprocessorEnvironment;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.coprocessor.BaseRegionObserver;
@@ -24,6 +25,12 @@ public class RegionObserverDemo extends BaseRegionObserver {
 	public static final byte[] ROW_GETAUTHOR = Bytes.toBytes("@@@GETAUTHOR@@@");
 
 	@Override
+	public void start(CoprocessorEnvironment e) throws IOException {
+		super.start(e);
+		LOG.info(" >>>> RegionObserverDemo start ...");
+	}
+
+	@Override
 	public void preGetOp(ObserverContext<RegionCoprocessorEnvironment> e, Get get, List<Cell> results) throws IOException {
 		LOG.debug("Got preGet for row: " + Bytes.toStringBinary(get.getRow()));
 
@@ -38,5 +45,11 @@ public class RegionObserverDemo extends BaseRegionObserver {
 			LOG.debug("coprocess match the row kv: " + kv);
 			results.add(kv);
 		}
+	}
+
+	@Override
+	public void stop(CoprocessorEnvironment e) throws IOException {
+		super.stop(e);
+		LOG.info(" >>>> RegionObserverDemo stop.");
 	}
 }
