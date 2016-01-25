@@ -21,8 +21,7 @@ import java.util.List;
 public class RegionObserverDemo extends BaseRegionObserver {
 	public static final Log LOG = LogFactory.getLog(RegionObserverDemo.class);
 	public static final byte[] FAMILY = Bytes.toBytes("@INFO@");
-	public static final byte[] ROW_GETTIME = Bytes.toBytes("@@@GETTIME@@@");
-	public static final byte[] ROW_GETAUTHOR = Bytes.toBytes("@@@GETAUTHOR@@@");
+	public static final byte[] ROW_GETDMEO = Bytes.toBytes("@@@GETDEMO@@@");
 
 	@Override
 	public void start(CoprocessorEnvironment e) throws IOException {
@@ -32,16 +31,10 @@ public class RegionObserverDemo extends BaseRegionObserver {
 
 	@Override
 	public void preGetOp(ObserverContext<RegionCoprocessorEnvironment> e, Get get, List<Cell> results) throws IOException {
-		LOG.debug("Got preGet for row: " + Bytes.toStringBinary(get.getRow()));
+		LOG.debug("Got preGetOp for row: " + Bytes.toStringBinary(get.getRow()));
 
-		if (Bytes.equals(get.getRow(), ROW_GETTIME)) {
-			KeyValue kv = new KeyValue(get.getRow(), FAMILY, ROW_GETTIME,
-					Bytes.toBytes(System.currentTimeMillis()));
-			LOG.debug("coprocess match the row kv: " + kv);
-			results.add(kv);
-		} else if (Bytes.equals(get.getRow(), ROW_GETAUTHOR)) {
-			KeyValue kv = new KeyValue(get.getRow(), FAMILY, ROW_GETAUTHOR,
-					Bytes.toBytes("micmiu.com"));
+		if (Bytes.equals(get.getRow(), ROW_GETDMEO)) {
+			KeyValue kv = new KeyValue(get.getRow(), FAMILY, ROW_GETDMEO, Bytes.toBytes("hello,micmiu.com"));
 			LOG.debug("coprocess match the row kv: " + kv);
 			results.add(kv);
 		}
