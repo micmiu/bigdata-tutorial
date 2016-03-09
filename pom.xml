@@ -47,7 +47,7 @@
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <commons-cli.version>1.2</commons-cli.version>
         <commons-codec.version>1.4</commons-codec.version>
-        <commons-collections.version>3.2.1</commons-collections.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
         <commons-configuration.version>1.6</commons-configuration.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
         <commons-io.version>2.1</commons-io.version>
